@@ -33,6 +33,8 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_press &kp LGUI>,<&macro_tap &kp N1>,<&macro_release &kp LGUI>;
+        };
+    };
 
     behaviors {
         hide: hide {
