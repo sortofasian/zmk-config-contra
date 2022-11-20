@@ -7,24 +7,41 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
 
 #define DFLT  0
 #define NUMB 1
-#define CTRL  2
+#define FUNC  2
+#define BT 3
 
 &caps_word {
     continue-list = <MINUS UNDERSCORE>;
 };
 
 / {
-    behaviors {
-        td_bt: tap_dance_bluetooth {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TAP_DANCE_BLUETOOTH";
+    chosen {
+        zmk,battery = &vbatt
+    };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-nrf-vddh";
+        label = "VBATT";
+    };
+
+    macros {
+        desk1: desk1 {
+            label = "MACRO_desk1";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&none>, <&ext_power EP_TOG>;
+            bindings = 
+                <&macro_press &kp LGUI>,<&macro_tap &kp N1>,<&macro_release &kp LGUI>;
+
+    behaviors {
+        hide: hide {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_hide";
+            #binding-cells = <0>;
+            tapping-term-ms = <150>;
+            bindings = <&caps_word>, <&desk1>;
         };
     };
 
@@ -35,26 +52,35 @@
             bindings = <
     &kp ESC    &kp Q      &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P      &kp BSPC
     &kp TAB    &kp A      &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &kp SEMI   &kp ENTER
-    &kp LSHFT  &kp Z      &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &kp RSHFT
-    &kp LCTRL  &kp LGUI   &kp LALT   &caps_word &mo NUMB   &kp SPACE  &kp SPACE  &mo CTRL   &td_bt     &kp RALT   &kp RGUI   &kp RCTRL
+    &kp LSHIFT &kp Z      &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &kp RSHIFT
+    &kp LCTRL  &kp LGUI   &kp LALT   &hide      &mo NUMB   &kp SPACE  &kp SPACE  &mo FUNC   &hide      &kp RALT   &kp RGUI   &kp RCTRL
             >;
         };
 
         numbers {
             bindings = <
-    &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &kp DEL
-    &trans     &kp N1     &kp N2     &kp N3     &kp N4     &kp N5     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &trans
-    &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &kp BSLH
+    &kp TILDE  &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT  &kp CARET  &kp AMPS   &kp STAR   &kp UNDER  &kp PLUS   &kp PIPE
+    &kp GRAVE  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &kp APOS
+    &trans     &kp DQT    &kp APOS   &kp LBRC   &kp LBKT   &kp LPAR   &kp RPAR   &kp RBKT   &kp RBRC   &kp MINUS  &kp EQUAL  &kp BSLH
     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
             >;
         };
 
-        bt_control {
+        functions {
             bindings = <
     &kp F1     &kp F2     &kp F3     &kp F4     &kp F5     &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &kp F11    &kp F12
-    &trans     &trans     &trans     &trans     &trans     &trans     &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &trans     &trans
+    &kp PSCRN  &trans     &trans     &trans     &trans     &trans     &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &trans     &kp DEL
     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-    &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
+    &trans     &trans     &trans     &trans     &mo BT     &trans     &trans     &trans     &trans     &trans     &trans     &trans
+            >;
+        };
+
+        bluetooth {
+            bindings = <
+    &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans       &trans       &trans       &trans       &trans       &trans
+    &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
+    &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
+    &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
             >;
         };
     };
