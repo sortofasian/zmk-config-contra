@@ -14,7 +14,7 @@
 #define CTRL  2
 
 &caps_word {
-    continue-list = <MINUS UNDERSCORE>
+    continue-list = <MINUS UNDERSCORE>;
 };
 
 / {
