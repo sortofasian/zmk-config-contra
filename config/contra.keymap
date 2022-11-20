@@ -19,7 +19,7 @@
 
 / {
     behaviors {
-        bt: tap_dance_bluetooth {
+        td_bt: tap_dance_bluetooth {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_BLUETOOTH";
             #binding-cells = <0>;
@@ -36,7 +36,7 @@
     &kp ESC    &kp Q      &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P      &kp BSPC
     &kp TAB    &kp A      &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &kp SEMI   &kp ENTER
     &kp LSHFT  &kp Z      &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &kp RSHFT
-    &kp LCTRL  &kp LGUI   &kp LALT   &caps_word &mo NUMB   &kp SPACE  &kp SPACE  &mo CTRL   &bt        &kp RALT   &kp RGUI   &kp RCTRL
+    &kp LCTRL  &kp LGUI   &kp LALT   &caps_word &mo NUMB   &kp SPACE  &kp SPACE  &mo CTRL   &td_bt     &kp RALT   &kp RGUI   &kp RCTRL
             >;
         };
 
